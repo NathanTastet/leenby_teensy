@@ -1,37 +1,39 @@
 #include <Arduino.h>
+
 #include <HerkulexServo.h>
-#include <stdio.h>
+
+#define PIN_SW_RX  9
+#define PIN_SW_TX  10
+#define SERVO_ID_A 36
 
 
-#define SERVO_ID  0xFE
 
 HerkulexServoBus herkulex_bus(Serial2);
-HerkulexServo my_servo(herkulex_bus, SERVO_ID);
+HerkulexServo    servo_a(herkulex_bus, SERVO_ID_A);
 
-uint16_t reponse;
-HerkulexStatusError error;
-HerkulexStatusDetail detail;
+
 
 void setup() {
+    Serial2.setTX(PIN_SW_TX);
+    Serial2.setRX(PIN_SW_RX);
+    Serial.begin(9600);
+    Serial2.begin(666666);
+    delay(500);
 
-  Serial2.setTX(10);
-  Serial2.setRX(9);
-  Serial2.begin(666666);
-  Serial.begin(9600);
-  my_servo.writeRam(HerkulexRamRegister::AlarmLedPolicy, 0x00);
+  // turn power on
+  servo_a.setTorqueOn();
+  
 
+  herkulex_bus.prepareIndividualMove();
+  servo_a.setPosition(256, 50,HerkulexLed::Purple);
+  herkulex_bus.executeMove();
+
+  delay(100 * 11.2f);
+
+  // turn power off
+  servo_a.setTorqueOff();
 }
 
 void loop() {
   herkulex_bus.update();
-  my_servo.setLedColor(HerkulexLed::Green);
-  reponse = my_servo.readRam2(HerkulexRamRegister::ID);
-  Serial.print("ID: ");
-  Serial.println(reponse);
-  my_servo.getStatus(error, detail);
-  Serial.print("error: "); 
-  Serial.println(static_cast<int>(error), HEX); // Convert error to int before printing
-  Serial.print("detail: ");
-  Serial.println(static_cast<int>(detail),HEX); // Convert detail to int before printing
-  delay(1000);
 }
