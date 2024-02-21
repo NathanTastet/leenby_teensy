@@ -45,6 +45,8 @@ void loop() {
   delay(100);
   servo_tout.setLedColor(HerkulexLed::Purple);
   delay(100);
+   servo_tout.setLedColor(HerkulexLed::Yellow);
+  delay(100);
 }
 
  void individual_move(HerkulexServoBus bus,HerkulexServo servo, uint16_t pos, uint8_t playtime) {
