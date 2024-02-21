@@ -4,9 +4,7 @@
 
 #define PIN_SW_RX  9
 #define PIN_SW_TX  10
-#define SERVO_ID_A 36
-#define SERVO_ID_B 37
-#define SERVO_ID 254
+#define SERVO_BROADCAST_ID 254
 
 
 #define bras_gauche 0
@@ -25,7 +23,7 @@ HerkulexServoBus herkulex_bus(Serial2);
 
 HerkulexServo* tableauServo[2][8] = {{nullptr}};
 
-HerkulexServo    servo_tout(herkulex_bus, SERVO_ID);
+HerkulexServo    servo_tout(herkulex_bus, SERVO_BROADCAST_ID);
 
 void setup() {
 
