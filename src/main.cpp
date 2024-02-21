@@ -29,7 +29,7 @@ void setup() {
 
   // initialiser les servos
   for (int i = 0; i < 2; ++i) {
-      for (int j = 0; j < 7; ++j) {
+      for (int j = 1; j < 8; ++j) {
           tableauServo[i][j] = new HerkulexServo(herkulex_bus,((i+2)*10+j)); // Crée un nouvel objet HerkulexServo avec le bon id
       }
   }
