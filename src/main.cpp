@@ -51,17 +51,6 @@ void setup() {
 }
 
 void loop() {
-  /*
-  herkulex_bus.prepareIndividualMove();
-  servo_a.setPosition(256, 50, HerkulexLed::Cyan);
-  herkulex_bus.executeMove();
-  herkulex_bus.update();
-  delay(100 * 11.2f);
-  herkulex_bus.prepareIndividualMove();
-  servo_a.setPosition(1024, 50, HerkulexLed::Purple);
-  herkulex_bus.executeMove();
-  herkulex_bus.update();
-  delay(100 * 11.2f);*/
 
   // il faut faire attention dès qu'on recoit un octet qui correspond à --> "D" en ascii (0x44) soit 68 en décimal
   // sur serial
@@ -111,15 +100,12 @@ void interruption(){
 
   // les angles sont sur 2 octets uint_16
 
-
   for(int i = 1; i < 7; i+=2){
     tableauServo[bras][i]->setLedColor(HerkulexLed::Green);
     uint16_t angle_degre = (octets_recus[i] << 8) | octets_recus[i+1];
     uint16_t tps_ms = (angle_degre/vitesse)*1000; // calcul du temps en s puis x1000 pour avoir le temps en ms
     tableauServo[bras][i]->individual_move(angle_degre,tps_ms, HerkulexLed::Yellow);
   }
-
-
   
 }
 
